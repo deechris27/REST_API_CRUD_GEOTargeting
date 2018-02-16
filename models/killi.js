@@ -3,7 +3,18 @@ const Schema = mongoose.Schema;
 
 //Create Schema and Model
 
-var killiSchema = new Schema({
+const GeoSchema = new Schema({
+  type:{
+    type: String,
+    default: "Point"
+  },
+  coordinates: {
+    type: [Number],
+    index: "2dsphere"
+  }
+});
+
+var KilliSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Name field is required']
@@ -14,10 +25,11 @@ var killiSchema = new Schema({
     available:{
       type: Boolean,
       default: false
-    }
+    },
+    geometry: GeoSchema
     // add in geo location
 });
 
-const Killi = mongoose.model('killi', killiSchema);
+const Killi = mongoose.model('killi', KilliSchema);
 
 module.exports = Killi;

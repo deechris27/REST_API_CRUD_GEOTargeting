@@ -16,11 +16,17 @@ router.post('/ninjas', function(req, res, next){
 }); //end of post
 
 router.put('/ninjas/:id', function(req, res){
-  res.send({name:'put'});
+  Killi.findByIdAndUpdate({_id:req.params.id}, req.body).then(function(){
+    Killi.findOne({_id:req.params.id}).then(function(killi){
+      res.send(killi);
+    });
+  });
 });
 
 router.delete('/ninjas/:id', function(req, res){
-  res.send({name:'delete'});
+  Killi.findByIdAndRemove({_id: req.params.id}).then(function(killi){
+      res.send(killi);
+  });
 });
 
 module.exports = router;
